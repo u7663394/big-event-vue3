@@ -10,6 +10,7 @@ specifiers:
   husky: ^8.0.0
   lint-staged: ^16.4.0
   pinia: ^2.0.32
+  pinia-plugin-persistedstate: ^4.7.1
   prettier: ^2.8.4
   sass: ^1.99.0
   vite: ^4.1.3
@@ -30,6 +31,7 @@ devDependencies:
   eslint-plugin-vue: 9.33.0_eslint@8.57.1
   husky: 8.0.3
   lint-staged: 16.4.0
+  pinia-plugin-persistedstate: 4.7.1_pinia@2.3.1
   prettier: 2.8.8
   sass: 1.99.0
   vite: 4.5.14_sass@1.99.0
@@ -585,7 +587,6 @@ packages:
 
   /@vue/devtools-api/6.6.4:
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
-    dev: false
 
   /@vue/eslint-config-prettier/7.1.0_rjjzfyjdefjjs4cuj4iuicmw4e:
     resolution: {integrity: sha512-Pv/lVr0bAzSIHLd9iz0KnvAr4GKyCEl+h52bc4e5yWuDVtLgFwycF7nrbWTAQAS+FU6q1geVd07lc6EWfJiWKQ==}
@@ -823,6 +824,10 @@ packages:
 
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+    dev: true
+
+  /defu/6.1.7:
+    resolution: {integrity: sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ==}
     dev: true
 
   /detect-libc/2.1.2:
@@ -1443,6 +1448,24 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /pinia-plugin-persistedstate/4.7.1_pinia@2.3.1:
+    resolution: {integrity: sha512-WHOqh2esDlR3eAaknPbqXrkkj0D24h8shrDPqysgCFR6ghqP/fpFfJmMPJp0gETHsvrh9YNNg6dQfo2OEtDnIQ==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      '@pinia/nuxt': '>=0.10.0'
+      pinia: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      '@pinia/nuxt':
+        optional: true
+      pinia:
+        optional: true
+    dependencies:
+      defu: 6.1.7
+      pinia: 2.3.1_vue@3.5.32
+    dev: true
+
   /pinia/2.3.1_vue@3.5.32:
     resolution: {integrity: sha512-khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==}
     peerDependencies:
@@ -1457,7 +1480,6 @@ packages:
       vue-demi: 0.14.10_vue@3.5.32
     transitivePeerDependencies:
       - '@vue/composition-api'
-    dev: false
 
   /postcss-selector-parser/6.1.2:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
@@ -1738,7 +1760,6 @@ packages:
         optional: true
     dependencies:
       vue: 3.5.32
-    dev: false
 
   /vue-eslint-parser/9.4.3_eslint@8.57.1:
     resolution: {integrity: sha512-2rYRLWlIpaiN8xbPiDyXZXRgLGOtWxERV7ND5fFAv5qo1D2N9Fu9MNajBNc6o13lZ+24DAWCkQCvj4klgmcITg==}
