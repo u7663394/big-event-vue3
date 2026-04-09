@@ -34,3 +34,12 @@ export const userUpdateInfoService = (data) => {
     data
   })
 }
+
+// 更新用户头像
+export const userUploadAvatarService = (avatar) => {
+  return request({
+    url: '/my/update/avatar',
+    method: 'patch',
+    data: { avatar }
+  })
+}
