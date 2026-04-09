@@ -1,6 +1,7 @@
 <script setup>
 import PageContainer from '@/components/PageContainer.vue'
 import { artGetChannelsService } from '@/api/article'
+import ChannelEdit from './components/ChannelEdit.vue'
 import { ref } from 'vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
 
@@ -20,22 +21,37 @@ getChannelList()
 /**
  * 编辑
  */
+const dialog = ref(null)
 const onEditChannel = (row) => {
-  console.log('编辑', row)
+  dialog.value.open(row)
 }
 
 /**
  * 删除
  */
 const onDelChannel = (row) => {
-  console.log('删除', row)
+  console.log(row)
+}
+
+/**
+ * 添加
+ */
+const onAddChannel = () => {
+  dialog.value.open({})
+}
+
+/**
+ * 删除/添加/编辑成功后: 刷新列表
+ */
+const onSuccess = () => {
+  getChannelList()
 }
 </script>
 
 <template>
   <page-container title="文章分类">
     <template #extra>
-      <el-button type="primary"> 添加分类 </el-button>
+      <el-button type="primary" @click="onAddChannel"> 添加分类 </el-button>
     </template>
     <!-- 
      主体表格:
@@ -75,5 +91,6 @@ const onDelChannel = (row) => {
         <el-empty description="没有数据" />
       </template>
     </el-table>
+    <channel-edit ref="dialog" @success="onSuccess"></channel-edit>
   </page-container>
 </template>
