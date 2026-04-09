@@ -1,9 +1,11 @@
-<script setup></script>
+<script setup>
+import en from 'element-plus/dist/locale/en.mjs'
+</script>
 
 <template>
-  <div>
+  <el-config-provider :locale="en">
     <router-view></router-view>
-  </div>
+  </el-config-provider>
 </template>
 
 <style scoped></style>
