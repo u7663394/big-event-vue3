@@ -3,6 +3,8 @@ import PageContainer from '@/components/PageContainer.vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
 import ChannelSelect from './components/ChannelSelect.vue'
 import { ref } from 'vue'
+import { artGetListService } from '@/api/article'
+import { formatTime } from '@/utils/format'
 
 /**
  * 参数绑定/传递
@@ -16,6 +18,18 @@ const params = ref({
   cate_id: '',
   state: ''
 })
+
+/**
+ * 获取文章列表
+ */
+const articleList = ref([])
+const total = ref(0)
+const getArticleList = async () => {
+  const res = await artGetListService(params.value)
+  articleList.value = res.data.data
+  total.value = res.data.total
+}
+getArticleList()
 
 /**
  * 编辑
@@ -67,7 +81,11 @@ const onDeleteArticle = (row) => {
         </template>
       </el-table-column>
       <el-table-column label="分类" prop="cate_name"></el-table-column>
-      <el-table-column label="发表时间" prop="pub_date"> </el-table-column>
+      <el-table-column label="发表时间" prop="pub_date">
+        <template #default="{ row }">
+          {{ formatTime(row.pub_date) }}
+        </template>
+      </el-table-column>
       <el-table-column label="状态" prop="state"></el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
