@@ -30,6 +30,13 @@ module.exports = {
         ignores: ['index'] // 允许 index.vue 命名
       }
     ],
+    'vue/max-attributes-per-line': [
+      'warn',
+      {
+        singleline: 3, // 单行最多 3 个属性
+        multiline: 1 // 多行每行 1 个属性
+      }
+    ],
     'vue/no-setup-props-destructure': ['off'], // 允许 props 解构
     'no-undef': 'error' // 禁止使用未定义的变量
   }
