@@ -8,3 +8,12 @@ export const userRegisterService = (data) => {
     data
   })
 }
+
+// 用户登录
+export const userLoginService = (data) => {
+  return request({
+    url: '/api/login',
+    method: 'post',
+    data
+  })
+}

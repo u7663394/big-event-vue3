@@ -31,7 +31,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (res) => {
     if (res.data.code === 0) {
-      return res.data
+      return res
     }
     ElMessage.error(res.data.message || '网络异常')
     return Promise.reject(res.data)
