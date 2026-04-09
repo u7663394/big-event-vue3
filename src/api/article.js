@@ -33,3 +33,8 @@ export const artGetListService = (params) => {
     params
   })
 }
+
+// 发布文章
+export const artPublishService = (data) => {
+  return request.post('/my/article/add', data)
+}

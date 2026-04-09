@@ -80,6 +80,19 @@ const onAddArticle = () => {
 }
 
 /**
+ * 编辑/添加成功后刷新列表
+ */
+const onSuccess = (type) => {
+  if (type === 'add') {
+    // 如果是添加，跳转渲染最后一页
+    const lastPage = Math.ceil((total.value + 1) / params.value.pagesize)
+    params.value.pagenum = lastPage
+  }
+  // 如果是编辑, 直接渲染
+  getArticleList()
+}
+
+/**
  * 删除
  */
 const onDeleteArticle = (row) => {
@@ -179,6 +192,6 @@ const onDeleteArticle = (row) => {
       style="margin-top: 20px; justify-content: flex-end"
     />
     <!-- 弹窗 -->
-    <article-edit ref="articleEditRef"></article-edit>
+    <article-edit ref="articleEditRef" @success="onSuccess"></article-edit>
   </page-container>
 </template>

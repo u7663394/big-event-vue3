@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import ChannelSelect from './ChannelSelect.vue'
 import { Plus } from '@element-plus/icons-vue'
-const visibleDrawer = ref(false)
+import { artPublishService } from '@/api/article.js'
+import { ElMessage } from 'element-plus'
 // 局部注册富文本编辑器
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
@@ -10,13 +11,19 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 /**
  * 对外暴露 open 方法
  */
+const visibleDrawer = ref(false)
+const editorRef = ref(null)
 const open = async (row) => {
   visibleDrawer.value = true
   if (row.id) {
     console.log('编辑回显')
   } else {
-    console.log('添加功能')
     formModel.value = { ...defaultForm }
+    imgUrl.value = ''
+    // 需要等 DOM 更新，才能确保拿到 editorRef
+    nextTick(() => {
+      editorRef.value.setHTML('')
+    })
   }
 }
 defineExpose({
@@ -44,6 +51,36 @@ const imgUrl = ref('')
 const onUploadFile = (file) => {
   imgUrl.value = URL.createObjectURL(file.raw) // 预览
   formModel.value.cover_img = file.raw
+}
+
+/**
+ * 发布文章:
+ *  1. 存 state
+ *  2. 转为 FormData 提交数据 (有文件)
+ *  3. 根据是否有 id 来判断编辑或添加
+ *  4. 通知父组件刷新列表
+ */
+const emit = defineEmits(['success'])
+const onPublish = async (state) => {
+  // 1. 存状态
+  formModel.value.state = state
+  // 2. 转换为 formData 数据
+  const fd = new FormData()
+  for (let key in formModel.value) {
+    fd.append(key, formModel.value[key])
+  }
+  // 3. 判断是编辑还是添加
+  if (formModel.value.id) {
+    // 3.1. TODO: 编辑回显
+    console.log('编辑操作')
+  } else {
+    // 3.2. 添加请求
+    await artPublishService(fd)
+    ElMessage.success('添加成功')
+    visibleDrawer.value = false
+    // 4. 通知父组件刷新列表
+    emit('success', 'add')
+  }
 }
 </script>
 
@@ -93,13 +130,18 @@ const onUploadFile = (file) => {
              2. v-model:content: 双向绑定内容
              3. contentType: 内容类型
           -->
-          <quill-editor theme="snow" v-model:content="formModel.content" contentType="html">
+          <quill-editor
+            ref="editorRef"
+            theme="snow"
+            v-model:content="formModel.content"
+            contentType="html"
+          >
           </quill-editor>
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">发布</el-button>
-        <el-button type="info">草稿</el-button>
+        <el-button type="primary" @click="onPublish('已发布')">发布</el-button>
+        <el-button type="info" @click="onPublish('草稿')">草稿</el-button>
       </el-form-item>
     </el-form>
   </el-drawer>
