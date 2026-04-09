@@ -17,3 +17,11 @@ export const userLoginService = (data) => {
     data
   })
 }
+
+// 获取用户信息
+export const userGetInfoService = () => {
+  return request({
+    url: '/my/userinfo',
+    method: 'get'
+  })
+}
