@@ -1,6 +1,8 @@
 <script setup>
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { userRegisterService } from '@/api/user'
+import { ElMessage } from 'element-plus'
 const isRegister = ref(true)
 
 /**
@@ -53,6 +55,15 @@ const rules = {
       trigger: 'blur'
     }
   ]
+}
+// 3. 表单预校验: 提交前校验整个表单
+const form = ref(null)
+const register = async () => {
+  await form.value.validate()
+  // 4. 调用注册接口
+  await userRegisterService(formModel.value)
+  ElMessage.success('注册成功!')
+  isRegister.value = false
 }
 </script>
 
@@ -111,7 +122,9 @@ const rules = {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="button" type="primary" auto-insert-space> 注册 </el-button>
+          <el-button @click="register" class="button" type="primary" auto-insert-space>
+            注册
+          </el-button>
         </el-form-item>
         <el-form-item class="flex">
           <el-link type="info" :underline="false" @click="isRegister = false"> ← 返回 </el-link>
@@ -154,7 +167,7 @@ const rules = {
   height: 100vh;
   background-color: #fff;
   .bg {
-    background: url('@/assets/logo2.png') no-repeat 60% center / 240px auto,
+    background: url('@/assets/logo.png') no-repeat 60% center / 240px auto,
       url('@/assets/login_bg.jpg') no-repeat center / cover;
     border-radius: 0 20px 20px 0;
   }

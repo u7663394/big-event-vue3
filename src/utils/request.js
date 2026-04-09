@@ -1,7 +1,7 @@
 // 封装请求模块
 import axios from 'axios'
 import router from '@/router'
-import { userUserStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { ElMessage } from 'element-plus'
 const baseURL = 'http://big-event-vue-api-t.itheima.net'
 
@@ -15,7 +15,7 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // 统一携带 token
-    const userStore = userUserStore()
+    const userStore = useUserStore()
     const token = userStore.token
     if (token) {
       config.headers.Authorization = token
