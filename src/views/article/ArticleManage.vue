@@ -5,6 +5,7 @@ import ChannelSelect from './components/ChannelSelect.vue'
 import { ref } from 'vue'
 import { artGetListService } from '@/api/article'
 import { formatTime } from '@/utils/format'
+import ArticleEdit from './components/ArticleEdit.vue'
 
 /**
  * 参数绑定/传递
@@ -66,8 +67,16 @@ const onReset = () => {
 /**
  * 编辑
  */
+const articleEditRef = ref(null)
 const onEditArticle = (row) => {
-  console.log('编辑', row)
+  articleEditRef.value.open(row)
+}
+
+/**
+ * 新增
+ */
+const onAddArticle = () => {
+  articleEditRef.value.open({})
 }
 
 /**
@@ -81,7 +90,7 @@ const onDeleteArticle = (row) => {
 <template>
   <page-container title="文章管理">
     <template #extra>
-      <el-button type="primary">发布文章</el-button>
+      <el-button type="primary" @click="onAddArticle">发布文章</el-button>
     </template>
     <!-- 表单 inline: 内联表单 -->
     <el-form inline>
@@ -169,5 +178,7 @@ const onDeleteArticle = (row) => {
       @current-change="onCurrentChange"
       style="margin-top: 20px; justify-content: flex-end"
     />
+    <!-- 弹窗 -->
+    <article-edit ref="articleEditRef"></article-edit>
   </page-container>
 </template>
