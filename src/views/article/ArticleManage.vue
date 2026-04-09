@@ -3,9 +3,10 @@ import PageContainer from '@/components/PageContainer.vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
 import ChannelSelect from './components/ChannelSelect.vue'
 import { ref } from 'vue'
-import { artGetListService } from '@/api/article'
+import { artGetListService, artDelService } from '@/api/article'
 import { formatTime } from '@/utils/format'
 import ArticleEdit from './components/ArticleEdit.vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 /**
  * 参数绑定/传递
@@ -95,8 +96,15 @@ const onSuccess = (type) => {
 /**
  * 删除
  */
-const onDeleteArticle = (row) => {
-  console.log('删除', row)
+const onDeleteArticle = async (row) => {
+  await ElMessageBox.confirm('你确认删除该文章信息吗？', '温馨提示', {
+    type: 'warning',
+    confirmButtonText: '确认',
+    cancelButtonText: '取消'
+  })
+  await artDelService(row.id)
+  ElMessage({ type: 'success', message: '删除成功' })
+  getArticleList()
 }
 </script>
 
