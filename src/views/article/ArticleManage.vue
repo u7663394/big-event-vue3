@@ -20,16 +20,34 @@ const params = ref({
 })
 
 /**
- * 获取文章列表
+ * 渲染文章列表 + loading 效果
  */
+const loading = ref(false)
 const articleList = ref([])
 const total = ref(0)
 const getArticleList = async () => {
+  loading.value = true
   const res = await artGetListService(params.value)
   articleList.value = res.data.data
   total.value = res.data.total
+  loading.value = false
 }
 getArticleList()
+
+/**
+ * 处理分页逻辑
+ *  1. @size-change
+ *  2. @current-change
+ */
+const onSizeChange = (newSize) => {
+  params.value.pagenum = 1 // 防止数据与页码错乱，重置页码为1
+  params.value.pagesize = newSize
+  getArticleList()
+}
+const onCurrentChange = (newPage) => {
+  params.value.pagenum = newPage
+  getArticleList()
+}
 
 /**
  * 编辑
@@ -73,7 +91,7 @@ const onDeleteArticle = (row) => {
       </el-form-item>
     </el-form>
     <!-- 表格 -->
-    <el-table :data="articleList" style="width: 100%">
+    <el-table v-loading="loading" :data="articleList" style="width: 100%">
       <el-table-column label="文章标题" width="400">
         <template #default="{ row }">
           <!-- el-link: 链接效果 -->
@@ -109,5 +127,33 @@ const onDeleteArticle = (row) => {
         <el-empty description="没有数据" />
       </template>
     </el-table>
+    <!-- 
+     分页组件: 
+      1. v-model:current-page: 当前页码
+      2. v-model:page-size: 每页条数
+      3. :page-sizes: 每页条数选项
+      4. layout: 显示哪些组件
+          - jumper: 快速跳转
+          - total: 总条数
+          - sizes: 每页条数选择器
+          - prev: 上一页按钮
+          - pager: 页码按钮
+          - next: 下一页按钮
+      5. background: 是否设置背景色
+      6. @size-change: 每页条数改变事件
+      7. @current-change: 当前页码改变事件
+      8. total: 总条数
+    -->
+    <el-pagination
+      v-model:current-page="params.pagenum"
+      v-model:page-size="params.pagesize"
+      :page-sizes="[2, 3, 4, 5, 10]"
+      layout="jumper, total, sizes, prev, pager, next"
+      background
+      :total="total"
+      @size-change="onSizeChange"
+      @current-change="onCurrentChange"
+      style="margin-top: 20px; justify-content: flex-end"
+    />
   </page-container>
 </template>
