@@ -19,6 +19,9 @@ const userStore = useUserStore()
   <p>{{ userStore.token }}</p>
   <el-button @click="userStore.setToken('Bearer your_token_here')">登陆</el-button>
   <el-button @click="userStore.removeToken()">退出</el-button>
+  <!-- 测试路由 -->
+  <hr />
+  <router-view></router-view>
 </template>
 
 <style scoped></style>

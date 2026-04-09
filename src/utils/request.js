@@ -46,6 +46,6 @@ request.interceptors.response.use(
   }
 )
 
-// 4. 导出实例
+// 导出实例
 export default request
 export { baseURL }
