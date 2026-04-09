@@ -1,9 +1,10 @@
 <script setup>
 import PageContainer from '@/components/PageContainer.vue'
-import { artGetChannelsService } from '@/api/article'
+import { artGetChannelsService, artDelChannelService } from '@/api/article'
 import ChannelEdit from './components/ChannelEdit.vue'
 import { ref } from 'vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 /**
  * 获取文章分类列表 + loading 效果
@@ -29,8 +30,18 @@ const onEditChannel = (row) => {
 /**
  * 删除
  */
-const onDelChannel = (row) => {
-  console.log(row)
+const onDelChannel = async (row) => {
+  // 1. 确认框
+  await ElMessageBox.confirm('你确认删除该分类信息吗？', '温馨提示', {
+    type: 'warning',
+    confirmButtonText: '确认',
+    cancelButtonText: '取消'
+  })
+  // 2. 调用接口删除
+  await artDelChannelService(row.id)
+  ElMessage({ type: 'success', message: '删除成功' })
+  // 3. 刷新列表
+  getChannelList()
 }
 
 /**
@@ -41,7 +52,7 @@ const onAddChannel = () => {
 }
 
 /**
- * 删除/添加/编辑成功后: 刷新列表
+ * 添加/编辑成功后: 刷新列表
  */
 const onSuccess = () => {
   getChannelList()

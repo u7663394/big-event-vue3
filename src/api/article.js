@@ -14,3 +14,14 @@ export const artAddChannelService = (data) => {
 export const artEditChannelService = (data) => {
   return request.put('/my/cate/info', data)
 }
+
+// 删除文章分类
+export const artDelChannelService = (id) => {
+  return request({
+    method: 'delete',
+    url: '/my/cate/del',
+    params: {
+      id
+    }
+  })
+}
