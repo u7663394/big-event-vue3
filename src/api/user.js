@@ -25,3 +25,12 @@ export const userGetInfoService = () => {
     method: 'get'
   })
 }
+
+// 更新用户信息
+export const userUpdateInfoService = (data) => {
+  return request({
+    url: '/my/userinfo',
+    method: 'put',
+    data
+  })
+}
