@@ -38,3 +38,16 @@ export const artGetListService = (params) => {
 export const artPublishService = (data) => {
   return request.post('/my/article/add', data)
 }
+
+// 获取文章详情
+export const artGetDetailService = (id) => {
+  return request({
+    url: '/my/article/info',
+    params: { id }
+  })
+}
+
+// 编辑文章
+export const artEditService = (data) => {
+  return request.put('/my/article/info', data)
+}
