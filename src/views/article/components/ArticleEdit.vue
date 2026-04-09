@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import ChannelSelect from './ChannelSelect.vue'
 import { Plus } from '@element-plus/icons-vue'
 const visibleDrawer = ref(false)
+// 局部注册富文本编辑器
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 /**
  * 对外暴露 open 方法
@@ -83,7 +86,16 @@ const onUploadFile = (file) => {
         </el-upload>
       </el-form-item>
       <el-form-item label="文章内容" prop="content">
-        <div class="editor">富文本编辑器</div>
+        <div class="editor">
+          <!-- 
+           富文本编辑器:
+             1. theme: 主题
+             2. v-model:content: 双向绑定内容
+             3. contentType: 内容类型
+          -->
+          <quill-editor theme="snow" v-model:content="formModel.content" contentType="html">
+          </quill-editor>
+        </div>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">发布</el-button>
@@ -119,6 +131,12 @@ const onUploadFile = (file) => {
       height: 178px;
       text-align: center;
     }
+  }
+}
+.editor {
+  width: 100%;
+  :deep(.ql-editor) {
+    min-height: 200px;
   }
 }
 </style>
