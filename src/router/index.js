@@ -4,6 +4,7 @@
  *    - hash 模式使用 createWebHashHistory()
  */
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores'
 
 const router = createRouter({
   // BASE_URL 是 Vite 内置的环境变量，表示应用的基础路径
@@ -32,6 +33,18 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+/**
+ * 登陆访问拦截: 全局前置守卫
+ * 返回值:
+ *  1. undefined / true: 直接放行
+ *  2. false: 拦回 from 的页面
+ *  3. 具体路径 或 路径对象: 拦截到对应的地址
+ */
+router.beforeEach((to) => {
+  const useStore = useUserStore()
+  if (!useStore.token && to.path !== '/login') return '/login'
 })
 
 export default router
