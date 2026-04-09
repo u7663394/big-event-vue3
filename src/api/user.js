@@ -43,3 +43,12 @@ export const userUploadAvatarService = (avatar) => {
     data: { avatar }
   })
 }
+
+// 更新用户密码
+export const userUpdatePassService = (data) => {
+  return request({
+    url: '/my/updatepwd',
+    method: 'patch',
+    data
+  })
+}
