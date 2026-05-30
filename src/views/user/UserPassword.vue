@@ -120,8 +120,8 @@ const onReset = () => {
 
 <template>
   <page-container title="重置密码">
-    <el-row>
-      <el-col :span="12">
+    <el-row class="user-form-wrap">
+      <el-col :span="12" class="user-form-col">
         <el-form :model="pwdForm" :rules="rules" ref="formRef"
 label-width="100px" size="large">
           <el-form-item label="原密码" prop="old_pwd">
@@ -142,3 +142,23 @@ label-width="100px" size="large">
     </el-row>
   </page-container>
 </template>
+
+<style lang="scss" scoped>
+.user-form-wrap {
+  padding: 10px 0;
+}
+
+.user-form-col {
+  padding: 24px;
+  background: var(--app-surface-muted);
+  border: 1px solid rgba(223, 231, 228, 0.74);
+  border-radius: var(--app-radius-md);
+}
+
+@media (max-width: 900px) {
+  .user-form-col {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+}
+</style>

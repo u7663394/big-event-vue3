@@ -56,7 +56,7 @@ const handleCommand = async (command) => {
 
 <template>
   <el-container class="layout-container">
-    <el-aside width="200px">
+    <el-aside width="220px">
       <div class="el-aside__logo"></div>
       <!-- 
        菜单组件: 
@@ -68,10 +68,10 @@ const handleCommand = async (command) => {
         5. router: 开启路由模式，菜单项的 index 将被视为路由路径
       -->
       <el-menu
-        active-text-color="#ffd04b"
-        background-color="#232323"
+        active-text-color="#2dd4bf"
+        background-color="#10201d"
         :default-active="$route.path"
-        text-color="#fff"
+        text-color="#dce8e5"
         router
       >
         <el-menu-item index="/article/channel">
@@ -108,8 +108,9 @@ const handleCommand = async (command) => {
     </el-aside>
     <el-container>
       <el-header>
-        <div>
-          程序员：<strong>{{ userStore.user.nickname || userStore.user.username }}</strong>
+        <div class="header-title">
+          <span class="eyebrow">Big Event 工作台</span>
+          <strong>{{ userStore.user.nickname || userStore.user.username }}</strong>
         </div>
         <!-- 
          下拉菜单: 
@@ -148,27 +149,114 @@ const handleCommand = async (command) => {
 <style lang="scss" scoped>
 .layout-container {
   height: 100vh;
+  background: var(--app-bg);
+
   .el-aside {
-    background-color: #232323;
-    &__logo {
-      height: 120px;
-      background: url('@/assets/logo.png') no-repeat center / 120px auto;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(20, 184, 166, 0.16), transparent 32%),
+      var(--app-sidebar);
+    box-shadow: 10px 0 32px rgba(16, 32, 29, 0.12);
+
+    &::after {
+      position: absolute;
+      right: 18px;
+      bottom: 24px;
+      width: 74px;
+      height: 74px;
+      border: 1px solid rgba(45, 212, 191, 0.24);
+      border-radius: 24px;
+      content: '';
+      transform: rotate(12deg);
     }
+
+    &__logo {
+      position: relative;
+      z-index: 1;
+      height: 118px;
+      margin: 0 18px 8px;
+      background: url('@/assets/logo.png') no-repeat center / 132px auto;
+      border-bottom: 1px solid rgba(220, 232, 229, 0.1);
+    }
+
     .el-menu {
+      position: relative;
+      z-index: 1;
       border-right: none;
+      padding: 8px 12px;
+      background: transparent;
+    }
+
+    :deep(.el-menu-item),
+    :deep(.el-sub-menu__title) {
+      height: 46px;
+      margin: 4px 0;
+      border-radius: 10px;
+      color: #dce8e5;
+    }
+
+    :deep(.el-menu-item:hover),
+    :deep(.el-sub-menu__title:hover) {
+      background: rgba(45, 212, 191, 0.12);
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+
+    :deep(.el-menu-item.is-active) {
+      background: rgba(45, 212, 191, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.24);
+      color: #2dd4bf;
+      font-weight: 700;
     }
   }
+
   .el-header {
-    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 72px;
+    padding: 0 28px;
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid rgba(223, 231, 228, 0.8);
+    backdrop-filter: blur(14px);
+
+    .header-title {
+      display: grid;
+      gap: 4px;
+      line-height: 1.2;
+
+      .eyebrow {
+        color: var(--app-text-muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      strong {
+        color: var(--app-text);
+        font-size: 18px;
+      }
+    }
+
     .el-dropdown__box {
       display: flex;
       align-items: center;
+      gap: 8px;
+      padding: 6px 8px 6px 6px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--app-primary-soft);
+        border-color: rgba(15, 118, 110, 0.16);
+      }
+
+      :deep(.el-avatar) {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(15, 118, 110, 0.18);
+      }
+
       .el-icon {
-        color: #999;
-        margin-left: 10px;
+        color: var(--app-text-muted);
       }
 
       &:active,
@@ -177,12 +265,23 @@ const handleCommand = async (command) => {
       }
     }
   }
+
+  .el-main {
+    padding: 24px;
+    overflow: auto;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0)),
+      var(--app-bg);
+  }
+
   .el-footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 44px;
+    background: var(--app-bg);
+    border-top: 1px solid rgba(223, 231, 228, 0.7);
     font-size: 14px;
-    color: #666;
+    color: var(--app-text-muted);
   }
 }
 </style>

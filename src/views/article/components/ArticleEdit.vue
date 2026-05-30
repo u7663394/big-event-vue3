@@ -179,37 +179,70 @@ const onPublish = async (state) => {
 </template>
 
 <style lang="scss" scoped>
+:deep(.el-drawer__body) {
+  padding-top: 4px;
+}
+
+:deep(.el-form) {
+  padding: 18px;
+  background: var(--app-surface-muted);
+  border: 1px solid rgba(223, 231, 228, 0.74);
+  border-radius: var(--app-radius-md);
+}
+
 .avatar-uploader {
   :deep() {
     .avatar {
       width: 178px;
       height: 178px;
       display: block;
+      object-fit: cover;
     }
+
     .el-upload {
-      border: 1px dashed var(--el-border-color);
-      border-radius: 6px;
+      border: 1px dashed rgba(15, 118, 110, 0.36);
+      border-radius: 14px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transition: var(--el-transition-duration-fast);
+      background: #ffffff;
     }
+
     .el-upload:hover {
       border-color: var(--el-color-primary);
+      transform: translateY(-1px);
     }
+
     .el-icon.avatar-uploader-icon {
       font-size: 28px;
-      color: #8c939d;
+      color: var(--app-text-muted);
       width: 178px;
       height: 178px;
       text-align: center;
     }
   }
 }
+
 .editor {
   width: 100%;
+
+  :deep(.ql-toolbar) {
+    border-color: var(--app-border);
+    border-radius: 10px 10px 0 0;
+    background: #ffffff;
+  }
+
+  :deep(.ql-container) {
+    border-color: var(--app-border);
+    border-radius: 0 0 10px 10px;
+    background: #ffffff;
+  }
+
   :deep(.ql-editor) {
     min-height: 200px;
+    color: var(--app-text);
+    line-height: 1.7;
   }
 }
 </style>

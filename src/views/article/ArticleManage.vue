@@ -114,7 +114,7 @@ const onDeleteArticle = async (row) => {
       <el-button type="primary" @click="onAddArticle">发布文章</el-button>
     </template>
     <!-- 表单 inline: 内联表单 -->
-    <el-form inline>
+    <el-form inline class="filter-form">
       <el-form-item label="文章分类：">
         <!-- 
          v-model: 
@@ -139,7 +139,7 @@ const onDeleteArticle = async (row) => {
       <el-table-column label="文章标题" width="400">
         <template #default="{ row }">
           <!-- el-link: 链接效果 -->
-          <el-link type="primary" :underline="false">{{ row.title }}</el-link>
+          <el-link type="primary" underline="never">{{ row.title }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="分类" prop="cate_name"></el-table-column>
@@ -148,7 +148,13 @@ const onDeleteArticle = async (row) => {
           {{ formatTime(row.pub_date) }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="state"></el-table-column>
+      <el-table-column label="状态" prop="state">
+        <template #default="{ row }">
+          <el-tag :type="row.state === '已发布' ? 'success' : 'warning'" round>
+            {{ row.state }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
           <el-button
@@ -197,9 +203,48 @@ const onDeleteArticle = async (row) => {
       :total="total"
       @size-change="onSizeChange"
       @current-change="onCurrentChange"
+      class="table-pagination"
       style="margin-top: 20px; justify-content: flex-end"
     />
     <!-- 弹窗 -->
     <article-edit ref="articleEditRef" @success="onSuccess"></article-edit>
   </page-container>
 </template>
+
+<style lang="scss" scoped>
+.filter-form {
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: var(--app-surface-muted);
+  border: 1px solid rgba(223, 231, 228, 0.74);
+  border-radius: var(--app-radius-md);
+
+  :deep(.el-form-item) {
+    margin-bottom: 0;
+  }
+}
+
+:deep(.el-table) {
+  border: 1px solid rgba(223, 231, 228, 0.8);
+}
+
+:deep(.el-link) {
+  font-weight: 700;
+}
+
+.table-pagination {
+  padding-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .filter-form {
+    display: grid;
+    gap: 12px;
+
+    :deep(.el-form-item) {
+      margin-right: 0;
+    }
+  }
+}
+</style>

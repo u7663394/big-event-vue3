@@ -105,3 +105,13 @@ const onSuccess = () => {
     <channel-edit ref="dialog" @success="onSuccess"></channel-edit>
   </page-container>
 </template>
+
+<style lang="scss" scoped>
+:deep(.el-table) {
+  border: 1px solid rgba(223, 231, 228, 0.8);
+}
+
+:deep(.el-table__row) {
+  height: 58px;
+}
+</style>

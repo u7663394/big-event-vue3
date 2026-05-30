@@ -97,3 +97,21 @@ const onSubmit = async () => {
     </template>
   </el-dialog>
 </template>
+
+<style lang="scss" scoped>
+:deep(.el-dialog__body) {
+  padding-top: 8px;
+}
+
+:deep(.el-form) {
+  padding: 18px 18px 2px;
+  background: var(--app-surface-muted);
+  border: 1px solid rgba(223, 231, 228, 0.74);
+  border-radius: var(--app-radius-md);
+}
+
+.dialog-footer {
+  display: inline-flex;
+  gap: 10px;
+}
+</style>
